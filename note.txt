@@ -1,0 +1,60 @@
+rax ==> store temporary value if sys_call, store sys_call number
+rdi ==> pass first argument function
+rsi ==> pass second argument function
+rdx ==> pass third argument function
+rcx ==> 4th argument
+r8  ==> 5th argument
+r9  ==> 6th argument
+7h argument passed by stack, not register
+
+section:
+  data  ==> declaring initialized data or constant
+  bss   ==> declaring non initialized variable
+  text  ==> code
+
+data types: bytes(8 bites), words(2 bytes), doublewords(4 bytes), quadwords(8 bytes)
+            , double quadwords(16 bytes == 128 bites)
+
+section .data:
+num1:   equ 100
+num2:   equ 50
+msg:    db "Sum is correct", 10     == "Sum is correct\n" : ,10 = \n
+
+==> 3 constant:
+db = define bytes ( put data in bytes size)
+dw = define word ( put data in word size)
+etc...
+
+RESB,RESW, RESD, RESQ, RESO, RESY, RESZ  ==> declare non initialized variable
+INCBIN ==> include external binary file
+EQU ==> define constant
+TIMES ==> repeating instruction
+
+
+Arithmetic Operation:
+
+ADD   ==> integer add
+SUB   ==> substract
+MUL   ==> unsigned multiply
+IMUL  ==> signe multiply
+DIV   ==> unsigned divide
+IDIV  ==> signed divide
+INC   ==> increment
+DEC   ==> decrement
+NEG   ==> negate
+
+Control flow:
+
+cmp ==> compare 2 value : cmp   rax, 50 == compare rax with 50
+
+JE  ==> if equal
+JZ  ==> if zero
+JNE ==> if not equal
+JNZ ==> if not zero
+JG  ==> if first > second
+JGE ==> if first >= second
+JA  ==> JG for unsigned
+JAE ==> JGE for unsigned
+
+JMP ==> unconditionnal jump (goto/appelle de fonction)
+
