@@ -1,80 +1,99 @@
-NAME 			= 	libasm.a
+NAME            = libasm.a
+NAME_DEBUG 			= libasm_debug.a
+TEST            = test.exe
+TEST_DEBUG 			= test_debug.exe
+COMPILE_FLAGS   = compile_flags.txt
+ASM             = nasm
+ASMFLAGS        = -felf64
+ASMDEBUG 				= -F dwarf
+CC              = gcc
+DEPFLAG         = -MMD -MP
+AR              = ar rcs
+RM              = rm -rf
+HEADER          = -I./include/
+HEADER_TEST     = -I./test/include/
+CFLAGS          = -Wall -Werror -Wextra
+CDEBUG 					= -g3
+GREEN           = \033[0;32m
+RED             = \033[0;31m
+YELLOW          = \033[;33m
+RESET           = \033[0m
+NEW             = \r\033[K
+SRC_LIB_PATH    = ./src/
+SRC_TEST_PATH   = ./test/src/
+OBJ_PATH        = obj/
+OBJ_DEBUG_PATH 	= obj/debug/
 
-TEST 			= 	test
+SRCS_LIB        = ft_strlen.s ft_write.s ft_read.s ft_strcpy.s ft_strcmp.s ft_strdup.s
+SRCS_LIB_FILES  = $(addprefix $(SRC_LIB_PATH), $(SRCS_LIB))
+OBJS_LIB        = $(addprefix $(OBJ_PATH), $(SRCS_LIB:.s=.o))
+OBJS_LIB_DEBUG  = $(addprefix $(OBJ_DEBUG_PATH), $(SRCS_LIB:.s=.o))
 
-COMPILE_FLAGS 	= 	compile_flags.txt
+SRCS_TEST       = test_strlen.c \
+									main.c
+SRCS_TEST_FILES = $(addprefix $(SRC_TEST_PATH), $(SRCS_TEST))
+OBJS_TEST       = $(addprefix $(OBJ_PATH), $(SRCS_TEST:.c=.o))
+OBJS_TEST_DEBUG = $(addprefix $(OBJ_DEBUG_PATH), $(SRCS_TEST:.c=.o))
 
-ASM 			= 	nasm
+all: $(NAME)
 
-ASMFLAGS 		= 	-felf64
+$(NAME): $(OBJS_LIB)
+	@$(AR) $(NAME) $(OBJS_LIB)
+	@printf "$(NEW)$(YELLOW)$(NAME)$(RESET)$(GREEN) Compiled\n$(RESET)compiled with: $(ASM) $(ASMFLAGS)\n"
 
-CC 				= 	gcc
+$(OBJ_PATH)%.o: $(SRC_LIB_PATH)%.s
+	@mkdir -p $(dir $@)
+	@$(ASM) $(ASMFLAGS) $(HEADER) $< -o $@
 
-DEPFLAG 		= 	-MMD -MP
+test: $(NAME) $(TEST)
 
-AR 				= 	ar rcs
+$(TEST): $(OBJS_TEST)
+	@$(CC) $(CFLAGS) -o $(TEST) $(OBJS_TEST) $(HEADER_TEST) ${NAME}
+	@printf "$(NEW)$(YELLOW)$(TEST)$(RESET)$(GREEN) Compiled\n$(RESET)compiled with: $(CC) $(CFLAGS)\n"
 
-RM 				= 	rm -rf
+$(OBJ_PATH)%.o: $(SRC_TEST_PATH)%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(HEADER_TEST) -c $< -o $@
+	@printf "$(NEW)$(YELLOW)Building: $(RESET)$(CC) $(CFLAGS) $<\n"
 
-HEADER 			= 	-I./includes/
+debug: ${NAME_DEBUG} $(TEST_DEBUG) Makefile
 
-HEADER_FILES 	= 	libasm.h
+${NAME_DEBUG}: ${OBJS_LIB_DEBUG}
+	@${AR} ${NAME_DEBUG} ${OBJS_LIB_DEBUG}
+	@printf "$(NEW)$(YELLOW)$(NAME_DEBUG)$(RESET)$(GREEN) Compiled\n$(RESET)compiled with: $(ASM) $(ASMFLAGS) ${ASMDEBUG}\n"
 
-GREEN 			= 	\033[0;32m
-RED 			= 	\033[0;31m
-BLUE 			= 	\033[0;34m
-YELLOW 			= 	\033[;33m
-BWHITE 			= 	\033[1;37m
-RESET 			= 	\033[0m
-ITALIC 			= 	\e[3m
-BOLD 			= 	\e[1m
-NEW 			= 	\r\033[K
+$(OBJ_DEBUG_PATH)%.o: $(SRC_LIB_PATH)%.s
+	@mkdir -p ${OBJ_PATH}
+	@mkdir -p $(dir $@)
+	@$(ASM) $(ASMFLAGS) ${ASMDEBUG} $(HEADER) $< -o $@
 
-SRC_LIB_PATH 	= 	./srcs/lib/
+$(TEST_DEBUG): $(OBJS_LIB_DEBUG) $(OBJS_TEST_DEBUG)
+	@$(CC) $(CFLAGS)  ${CDEBUG} -o $(TEST_DEBUG) $(OBJS_TEST_DEBUG) $(HEADER_TEST) ${NAME_DEBUG}
+	@printf "$(NEW)$(YELLOW)$(TEST_DEBUG)$(RESET)$(GREEN) Compiled\n$(RESET)compiled with: $(CC) $(CFLAGS_DEBUG)\n"
 
-SRC_TEST_PATH 	= 	./srcs/test/
+$(OBJ_DEBUG_PATH)%.o: $(SRC_TEST_PATH)%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS_DEBUG) $(HEADER_TEST) -c $< -o $@
+	@printf "$(NEW)$(YELLOW)Debug Building: $(RESET)$(CC) $(CFLAGS_DEBUG) $<\n"
 
-OBJ_PATH 		= 	obj/
+compile_flags: $(COMPILE_FLAGS)
 
-DEP_PATH 		= 	dep/
+$(COMPILE_FLAGS):
+	@echo "-I./include/\n-I./test/include/-Wall -Werror -Wextra" > $(COMPILE_FLAGS)
 
-################################################################################
-#                                    SOURCES                                   #
-################################################################################
+clean_debug:
+	${RM} ${OBJ_DEBUG_PATH}
 
-SRCS_LIB 		= 	ft_strlen.s
+clean: clean_debug
+	$(RM) $(OBJ_PATH)
 
-SRCS_TEST 		= 	main.c
+fclean_debug: clean_debug
+	${RM} ${NAME_DEBUG} ${TEST_DEBUG}
 
-OBJS_LIB 		= 	$(addprefix ${OBJ_PATH}, ${SRCS_LIB:.s=.o})
+fclean: clean fclean_debug
+	$(RM) $(NAME) $(TEST) $(COMPILE_FLAGS)
 
-OBJS_TEST 		= 	$(addprefix ${OBJ_PATH}, ${SRCS_TEST:.c=.o})
+re: fclean all
 
-################################################################################
-#                                 RULES                                        #
-################################################################################
+.PHONY: all clean fclean re test debug fclean_debug compile_flags
 
-all: 				${NAME}
-
-${NAME}: 			${OBJS_LIB} ${COMPILE_FLAGS} Makefile
-				@${AR} -o ${NAME} ${OBJS_LIB}
-				@printf "${NEW}${YELLOW}${NAME}${RESET}${GREEN}${BOLD} Compiled\n${RESET}${GREEN}compiled with:${RESET} ${ASM} ${ASMFLAGS}\n"
-
-${OBJ_PATH}%.o: 	${SRC_PATH}%.s
-				@mkdir -p $(dir $@)
-				@${ASM} ${ASMFLAGS} ${HEADER} $< -o $@
-
-compile_flags: 		${COMPILE_FLAGS}
-
-${COMPILE_FLAGS}:
-				@echo "-I/includes/\n-Wall -Werror -Wextra" > compile_flags.txt
-
-clean:
-				${RM} ${OBJ_PATH}
-
-fclean: 			clean
-				${RM} ${NAME} ${TEST} ${COMPILE_FLAGS}
-
-re: 				fclean all
-
-.PHONY: 			all fclean clean re compile_flags
