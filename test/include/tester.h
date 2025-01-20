@@ -18,5 +18,6 @@
 #define YELLOW "\033[1;93m"
 
 void test_strlen(void);
+void print_result(bool result);
 
 #endif // !TESTER_H

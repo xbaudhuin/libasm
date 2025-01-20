@@ -1,6 +1,6 @@
 #include "tester.h"
 
-void test_strlen(void) {
+void test_strlen() {
   const char *str = "bonjour";
   const char *empty = "";
   char str_with_0[11];
@@ -22,27 +22,14 @@ void test_strlen(void) {
   printf("######TESTING STRLEN######\n\n"
          "ft_strlen(\"%s\"): %ld ; strlen(\"%s\") = %ld",
          str, ft_strlen_str, str, strlen_str);
-  if (ft_strlen_str == strlen_str) {
-    printf("  ==> " GREEN "Success\n" RESET);
-  } else {
-    printf("  ==> " RED "Failure\n");
-  }
+  print_result(ft_strlen_str == strlen_str);
 
   printf("ft_strlen(\"\") = %ld ; strlen(\"\") = %ld", ft_strlen_empty,
          strlen_empty);
-  if (ft_strlen_str == strlen_str) {
-    printf("  ==> " GREEN "Success\n" RESET);
-  } else {
-    printf("  ==> " RED "Failure\n");
-  }
+  print_result(ft_strlen_str == strlen_str);
 
   printf("ft_strlen(\"Hello\\0World) = %ld ; strlen(\"Hello\\0World\") = %ld",
          ft_strlen_str_with_0, strlen_str_with_0);
-  if (ft_strlen_str == strlen_str) {
-    printf("  ==> " GREEN "Success\n" RESET);
-  } else {
-    printf("  ==> " RED "Failure\n");
-  }
-
+  print_result(ft_strlen_str == strlen_str);
   printf("\n\n");
 }

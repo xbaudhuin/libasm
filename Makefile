@@ -30,7 +30,9 @@ OBJS_LIB        = $(addprefix $(OBJ_PATH), $(SRCS_LIB:.s=.o))
 OBJS_LIB_DEBUG  = $(addprefix $(OBJ_DEBUG_PATH), $(SRCS_LIB:.s=.o))
 
 SRCS_TEST       = test_strlen.c \
-									main.c
+									main.c \
+									utils.c 
+
 SRCS_TEST_FILES = $(addprefix $(SRC_TEST_PATH), $(SRCS_TEST))
 OBJS_TEST       = $(addprefix $(OBJ_PATH), $(SRCS_TEST:.c=.o))
 OBJS_TEST_DEBUG = $(addprefix $(OBJ_DEBUG_PATH), $(SRCS_TEST:.c=.o))
@@ -79,7 +81,7 @@ $(OBJ_DEBUG_PATH)%.o: $(SRC_TEST_PATH)%.c
 compile_flags: $(COMPILE_FLAGS)
 
 $(COMPILE_FLAGS):
-	@echo "-I./include/\n-I./test/include/-Wall -Werror -Wextra" > $(COMPILE_FLAGS)
+	@echo "-I./include/\n-I./test/include/\n-Wall -Werror -Wextra" > $(COMPILE_FLAGS)
 
 clean_debug:
 	${RM} ${OBJ_DEBUG_PATH}

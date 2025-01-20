@@ -1,7 +1,7 @@
 #include "tester.h"
 #include <stdio.h>
 
-int main(int ac, char **av) {
+int main() {
   test_strlen();
   return (0);
 }
