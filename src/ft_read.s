@@ -1,4 +1,3 @@
-
 extern __errno_location
 global ft_read
 
@@ -16,7 +15,7 @@ ft_read:
 .error:
 	neg rax
 	push rax
-	call __errno_location
+	call __errno_location wrt ..plt
 	pop rdi
 	mov dword [rax], edi
 	mov rax, -1

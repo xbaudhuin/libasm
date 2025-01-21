@@ -26,10 +26,10 @@ void test_strlen() {
 
   printf("ft_strlen(\"\") = %ld ; strlen(\"\") = %ld", ft_strlen_empty,
          strlen_empty);
-  print_result(ft_strlen_str == strlen_str);
+  print_result(ft_strlen_empty == strlen_empty);
 
   printf("ft_strlen(\"Hello\\0World) = %ld ; strlen(\"Hello\\0World\") = %ld",
          ft_strlen_str_with_0, strlen_str_with_0);
-  print_result(ft_strlen_str == strlen_str);
+  print_result(ft_strlen_str_with_0 == strlen_str_with_0);
   printf("\n\n");
 }

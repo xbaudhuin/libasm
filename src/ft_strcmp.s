@@ -1,11 +1,12 @@
-section .text
-
 global ft_strcmp
+
+section .text
 
 ; int ft_strcmp(const char *s1, const char *s2)
 
 ft_strcmp:
 	xor rax,rax ; set rax to 0
+	xor rcx, rcx
 .loop:
 	mov al,[rdi]
 	mov cl,[rsi]
@@ -19,6 +20,6 @@ ft_strcmp:
 
 .end:
 	sub al,cl
-	movzx rax, al ; signed move
+	movsx rax, al ; signed move
 	ret
 

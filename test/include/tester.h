@@ -1,6 +1,7 @@
 #ifndef TESTER_H
 #define TESTER_H
 
+#include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -18,6 +19,9 @@
 #define YELLOW "\033[1;93m"
 
 void test_strlen(void);
+void test_strcpy(void);
+void test_strcmp(void);
+void test_strdup(void);
 void print_result(bool result);
 
 #endif // !TESTER_H

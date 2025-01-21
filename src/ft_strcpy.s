@@ -1,6 +1,6 @@
-section .text
-
 global ft_strcpy
+
+section .text
 
 ; char *ft_strcpy(char *dest, const char *s)
 

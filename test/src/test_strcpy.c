@@ -1,7 +1,14 @@
 #include "tester.h"
+#include <string.h>
 
 void test_strcpy(void) {
-  char *dest_ const char *str = "bonjour";
+  char dest_str_ft_strcpy[10] = {0};
+  char dest_str_strcpy[10] = {0};
+  char dest_empty_ft_strcpy[10] = {0};
+  char dest_empty_strcpy[10] = {0};
+  char dest_str_with_0_ft_strcpy[10] = {0};
+  char dest_str_with_0_strcpy[10] = {0};
+  char *str = "bonjour";
   const char *empty = "";
   char str_with_0[11];
 
@@ -10,26 +17,29 @@ void test_strcpy(void) {
   str_with_0[6] = 'W', str_with_0[7] = 'o', str_with_0[8] = 'r',
   str_with_0[9] = 'l', str_with_0[10] = 'd';
 
-  const size_t ft_strcpy_str = ft_strcpy(str);
-  const size_t strcpy_str = strcpy(str);
+  char *ft_strcpy_str = ft_strcpy(dest_str_ft_strcpy, str);
+  char *strcpy_str = strcpy(dest_str_strcpy, str);
 
-  const size_t ft_strcpy_empty = ft_strcpy(empty);
-  const size_t strcpy_empty = strcpy(empty);
+  char *ft_strcpy_empty = ft_strcpy(dest_empty_ft_strcpy, empty);
+  char *strcpy_empty = strcpy(dest_empty_strcpy, empty);
 
-  const size_t ft_strcpy_str_with_0 = ft_strcpy(str_with_0);
-  const size_t strcpy_str_with_0 = strcpy(str_with_0);
+  char *ft_strcpy_str_with_0 = ft_strcpy(dest_str_with_0_ft_strcpy, str_with_0);
+  char *strcpy_str_with_0 = strcpy(dest_str_with_0_strcpy, str_with_0);
 
   printf("######TESTING strcpy######\n\n"
-         "ft_strcpy(\"%s\"): %ld ; strcpy(\"%s\") = %ld",
+         "ft_strcpy(dest_ft_strcpy, \"%s\"): %s ; strcpy(dest_strcpy, \"%s\") "
+         "= %s",
          str, ft_strcpy_str, str, strcpy_str);
-  print_result(ft_strcpy_str == strcpy_str);
+  print_result(strcmp(ft_strcpy_str, strcpy_str) == 0);
 
-  printf("ft_strcpy(\"\") = %ld ; strcpy(\"\") = %ld", ft_strcpy_empty,
-         strcpy_empty);
-  print_result(ft_strcpy_str == strcpy_str);
+  printf(
+      "ft_strcpy(dest_ft_strcpy, \"\") = %s ; strcpy(dest_strcpy, \"\") = %s",
+      ft_strcpy_empty, strcpy_empty);
+  print_result(strcmp(ft_strcpy_empty, strcpy_empty) == 0);
 
-  printf("ft_strcpy(\"Hello\\0World) = %ld ; strcpy(\"Hello\\0World\") = %ld",
+  printf("ft_strcpy(dest_ft_strcpy, \"Hello\\0World) = %s ; "
+         "strcpy(dest_strcpy, \"Hello\\0World\") = %s",
          ft_strcpy_str_with_0, strcpy_str_with_0);
-  print_result(ft_strcpy_str == strcpy_str);
+  print_result(strcmp(ft_strcpy_str_with_0, strcpy_str_with_0) == 0);
   printf("\n\n");
 }
