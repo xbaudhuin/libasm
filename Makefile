@@ -39,6 +39,7 @@ SRCS_TEST       = 	test_strlen.c \
 				  	test_strcpy.c \
 				  	test_strcmp.c \
 				  	test_strdup.c \
+				  	test_read.c \
 					main.c \
 					utils.c 
 

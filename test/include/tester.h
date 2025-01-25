@@ -18,10 +18,13 @@
 #define GREEN "\033[1;92m"
 #define YELLOW "\033[1;93m"
 
+enum { SUCCESS = 0, FAILURE = -1 };
+
 void test_strlen(void);
 void test_strcpy(void);
 void test_strcmp(void);
 void test_strdup(void);
+void test_read(void);
 void print_result(bool result);
 
 #endif // !TESTER_H

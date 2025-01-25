@@ -44,34 +44,36 @@ void test_strdup(void) {
   free(test3_ft_strdup);
   free(test3_strdup);
 
-  char *dump = malloc(50000);
-  if (dump) {
-    memset(dump, 0, 50000);
-  }
-  dump[550] = 'a';
-  if (dump == NULL) {
-    printf(RED "FAIL to allocate dump\n" RESET);
-  } else {
-    printf(GREEN "dump is allocated\n" RESET);
-  }
-  char *dump2 = malloc(50000);
-  if (dump2) {
-    memset(dump2, 0, 50000);
-  }
-  dump2[550] = 'b';
-  printf("%s\n", dump);
-  if (dump2 == NULL) {
-    printf(RED "FAIL to allocate dump\n" RESET);
-  } else {
-    printf(GREEN "dump is allocated\n" RESET);
-  }
-  char *test4_ft_strdup = ft_strdup("FAIL MALLOC                               "
-                                    "                                        ");
+  /* char *dump = malloc(50000); */
+  /* if (dump) { */
+  /*   memset(dump, 0, 50000); */
+  /* } */
+  /* dump[550] = 'a'; */
+  /* if (dump == NULL) { */
+  /*   printf(RED "FAIL to allocate dump\n" RESET); */
+  /* } else { */
+  /*   printf(GREEN "dump is allocated\n" RESET); */
+  /* } */
+  /* char *dump2 = malloc(50000); */
+  /* if (dump2) { */
+  /*   memset(dump2, 0, 50000); */
+  /* } */
+  /* dump2[550] = 'b'; */
+  /* printf("%s\n", dump); */
+  /* if (dump2 == NULL) { */
+  /*   printf(RED "FAIL to allocate dump\n" RESET); */
+  /* } else { */
+  /*   printf(GREEN "dump is allocated\n" RESET); */
+  /* } */
+  errno = 0;
+  char *test4_ft_strdup = ft_strdup("FAIL MALLOC "
+                                    " ");
   const int errno_test4_ft_strdup = errno;
+  errno = 0;
   char *test4_strdup = ft_strdup("FAIL MALLOC                               "
                                  "                                        ");
   const int errno_test4_strdup = errno;
-  free(dump);
+  /* free(dump); */
 
   printf("test 4 : \"FAIL MALLOC (long chain)\"; ft_strdup: %s, errno = %d ; "
          "strdup: %s, "
